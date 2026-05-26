@@ -1,0 +1,1 @@
+export const wallpaper_tpl = `<img src="{{= data.url }}" />`
