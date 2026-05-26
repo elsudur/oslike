@@ -1,0 +1,245 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="Yet another SC Monitoring desktop">
+	<meta name="theme-color" content="#ffffff">
+	<link href="./assets/img/sc-logo.png" rel="icon">
+	<!--link rel="manifest" href="manifest.json"-->
+	<title>SC Monitor</title>
+	<link rel="stylesheet" href="./css/uPlot.min.css">
+	<link rel="stylesheet" href="./css/7.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+	<div id="app">
+		<div id="wallpaper" class="show"></div>
+		<div id="context-menu">
+			<ul id="cmContainer" class="can-hover" role="menu"></ul>
+		</div>
+		<div class="dragContainer" data-cm="desktop">
+			<div id="winContainer"></div>
+			<div class="window active" style="transform: translate(100px, 100px); width: 400px">
+				<div class="title-bar" data-movement="drag">
+					<div class="title-bar-text">Alert</div>
+					<div class="title-bar-controls">
+						<button aria-label="Close" class="onclick" data-context="desktop" data-action="close"
+							data-args="alert"></button>
+					</div>
+				</div>
+				<div class="window-body">
+					<div>
+						<section class="menu-bar">
+							<ul role="menubar">
+								<li role="menuitem" tabindex="0">File</li>
+								<li role="menuitem" tabindex="0">Edit</li>
+								<li role="menuitem" tabindex="0">View</li>
+								<li role="menuitem" tabindex="0">Help</li>
+							</ul>
+						</section>
+						<section class="function-bar">
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/remote-desktop.png">
+								<span>Back</span>
+							</div>
+							<div class="separate"></div>
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/hdd.png">
+								<span>Back</span>
+							</div>
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/hdd.png">
+								<span>Back</span>
+							</div>
+							<div class="separate"></div>
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/copy.png">
+							</div>
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/paste.png">
+							</div>
+							<div class="separate"></div>
+						</section>
+						<section class="function-bar small">
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/paste.png">
+							</div>
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/paste.png">
+							</div>
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/paste.png">
+							</div>
+							<div class="separate"></div>
+							<div class="btn">
+								<img src="https://img.icons8.com/color/30/000000/paste.png">
+							</div>
+						</section>
+						<div class="window-content has-scrollbar"></div>
+					</div>
+					
+				</div>
+				<div data-movement="resize" class="resizeHandle"></div>
+			</div>
+			<div id="topnav">
+				<div class="nav-item nav-toolbar">
+					<div class="toolbar-item start-menu" style="margin-right: 10px">
+						<img src="assets/img/sc-logo.png" />
+						<ul role="menu" class="can-hover">
+							<li role="menuitem" tabindex="0" aria-haspopup="true">
+								<label>View</label>
+								<ul role="menu">
+									<li role="menuitem">
+										<input type="checkbox" id="fullscreen_toggle">
+										<label for="fullscreen_toggle">Full Screen</label>
+									</li>
+									<li role="menuitem">
+										<input type="checkbox" id="stats_toggle">
+										<label for="stats_toggle">StatsJs</label>
+									</li>
+									<li role="menuitem">
+										<input type="checkbox" id="docker_toggle">
+										<label for="docker_toggle">Docker</label>
+									</li>
+								</ul>
+							</li>
+							<li role="menuitem" tabindex="0" aria-haspopup="true">
+								<label>Sort by</label>
+								<ul role="menu">
+									<li role="menuitem"><a href="#menu">Name</a></li>
+									<li role="menuitem"><a href="#menu">Size</a></li>
+									<li role="menuitem"><a href="#menu">Item type</a></li>
+									<li role="menuitem"><a href="#menu">Date modified</a></li>
+								</ul>
+							</li>
+							<li role="menuitem" class="has-divider"><a href="#menu">Refresh</a></li>
+							<li role="menuitem" aria-disabled="true"><a href="#menu">Paste</a></li>
+							<li role="menuitem" aria-disabled="true" class="has-divider">
+								<a href="#menu">Paste shortcut</a>
+							</li>
+							<li role="menuitem">
+								<img src="https://img.icons8.com/color/18/000000/truck.png" />
+								<label data-action="runapp" data-args="armada">Armada</label>
+							</li>
+							<li role="menuitem">
+								<img src="https://img.icons8.com/color/18/000000/cash.png" />
+								<label data-action="runapp" data-args="pettycash">PettyCash</label>
+							</li>
+							<li role="menuitem">
+								<img src="https://img.icons8.com/color/18/000000/remote-desktop.png" />
+								<label data-action="runapp" data-args="wallpaper">Wallpaper</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="nav-item nav-task"></div>
+				<div class="nav-item nav-tray">
+					<label for="inputExcel">Excel</label>
+					<input id="inputExcel" type="file" />
+					<div class="searchbox">
+						<input id="input-search-dekstop" type="search" placeholder="Search" />
+						<button aria-label="search" data-action="search"></button>
+					</div>
+					<div id="searchloading" style="position: absolute;width: 187px;top: 28px; display: none;">
+						<div role="progressbar" class="marquee"></div>
+					</div>
+					<div class="tray-item">
+						<img src="https://img.icons8.com/color/23/000000/monitor--v1.png">
+					</div>
+					<div class="tray-item">
+						<img src="https://img.icons8.com/color/23/000000/rfid-signal.png">
+					</div>
+					<div class="tray-item nav-messages"></div>
+					<div class="timer" style="text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;"></div>
+				</div>
+			</div>
+			<div class="dock" style="display: none">
+				<div class="icon onclick" data-contex="backoffice" data-action="openapp">
+					<img
+						src="https://play-lh.googleusercontent.com/nm76qc65Cw0f6RwnV62pmnA9J5levTTecDNAMXSJ8oCUHyw5_9JZYeK-o4nIczDBZ6M=s56-rw">
+					<hr class="point">
+				</div>
+
+				<div id="openWallpaper" class="icon" flag="pettycash" action="open">
+					<img src="https://img.icons8.com/color/cash.png">
+					<hr class="point">
+				</div>
+
+				<div class="icon">
+					<img src="https://img.icons8.com/color/push-notifications.png">
+					<hr class="point">
+				</div>
+				<hr class="column">
+				<div class="icon" flag="chat" action="open">
+					<img src="https://img.icons8.com/color/message-squared.png">
+					<hr class="point">
+				</div>
+				<hr class="column">
+				<div class="icon" id="wallpaper-launch">
+					<img src="https://img.icons8.com/color/anonymous-mask.png">
+					<hr class="point">
+				</div>
+			</div>
+		</div>
+		<div class="scan-lines" style="display: none;"></div>
+		<div id="window-alert" class="onclick" data-context="desktop" data-action="focus" data-args="alert"
+			style="display: none;">
+			<div class="window active">
+				<div class="title-bar">
+					<div class="title-bar-text">Alert</div>
+					<div class="title-bar-controls">
+						<button aria-label="Close" class="onclick" data-context="desktop" data-action="close"
+							data-args="alert"></button>
+					</div>
+				</div>
+				<div class="window-body">
+					<div>
+						<div class="alert-message sunken-panel">
+							<div>
+								<img src="" alt="">
+							</div>
+							<div class="msg has-scrollbar">
+								<code></code>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--script src="./lib/eruda.js"></script>
+	<script>
+		eruda.init()
+	</script-->
+	<script src="./lib/xlsx.mini.min.js"></script>
+	<script src='./lib/stats.min.js'></script>
+	<script src="./lib/mikado.bundle.min.js"></script>
+	<script src="./lib/umbrella.min.js"></script>
+	<script src="./lib/uPlot.iife.min.js"></script>
+	<!-- <script src="./js/script.js" type="module"></script> -->
+	<script src="./src/main.js" type="module"></script>
+
+	<script>
+		var input = document.getElementById('inputExcel')
+		input.addEventListener('change', async function (e) {
+			const file = e.target.files[0];
+			if (!file) return;
+
+			const data = await file.arrayBuffer();
+
+			// SheetJS membaca file secara mentah (tidak sensitif terhadap nilai undefined)
+			const workbook = XLSX.read(data, { type: 'array' });
+			const sheetName = workbook.SheetNames[0];
+			const worksheet = workbook.Sheets[sheetName];
+
+			// Konversi ke JSON. Secara otomatis melewati (skip) semua sel bertipe undefined!
+			const jsonResult = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+			console.log("Hasil JSON Aman 100%:", jsonResult);
+		})
+	</script>
+</body>
+
+</html>
